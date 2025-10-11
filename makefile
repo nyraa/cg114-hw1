@@ -2,8 +2,17 @@ CC = gcc
 CFLAGS = -Wall
 LDFLAGS = -lGL -lGLU -lglut
 
-displaystl: displaystl.c
-	$(CC) $(CFLAGS) -o displaystl displaystl.c $(LDFLAGS)
+OBJ = displaystl.o readstl.o
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+all: displaystl
+
+displaystl: $(OBJ)
+	$(CC) $(CFLAGS) -o $@ $(OBJ) $(LDFLAGS)
+
 clean:
-	rm -f displaystl
-.PHONY: clean
+	rm -f displaystl $(OBJ)
+
+.PHONY: all clean
