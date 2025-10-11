@@ -23,7 +23,13 @@ uint32_t readBinSTL(const char* filename, struct Triangle** triangles)
         return 0;
     }
 
-    fread(*triangles, sizeof(struct Triangle), numTriangles, file);
+    char buffer[50];
+    for (uint32_t i = 0; i < numTriangles; i++)
+    {
+        fread(buffer, 50, 1, file);
+        struct Triangle* tri = &((*triangles)[i]);
+        *tri = *(struct Triangle*)buffer;
+    }
     fclose(file);
     return numTriangles;
 }
