@@ -10,3 +10,4 @@ struct Triangle
 };
 
 uint32_t readBinSTL(const char* filename, struct Triangle** triangles);
+uint32_t readAsciiSTL(const char* filename, struct Triangle** triangles);

@@ -135,7 +135,8 @@ void SpecialKeys(int key, int x, int y)
 
 void loadSTL()
 {
-    numTriangles = readBinSTL("Bunny_Binary.stl", &triangles);
+    // numTriangles = readBinSTL("Bunny_Binary.stl", &triangles);
+    numTriangles = readAsciiSTL("Bunny_ASCII.stl", &triangles);
     printf("Number of triangles read: %u\n", numTriangles);
     
     // Re-calculate the normal vectors
