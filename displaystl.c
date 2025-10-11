@@ -23,7 +23,8 @@ static GLfloat zCenter = 0.0f;
 
 void RenderScene(void)
 {
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glShadeModel(GL_SMOOTH);
 
     glPushMatrix();
     glTranslatef(-xCenter, -yCenter, -zCenter);
@@ -50,6 +51,8 @@ void SetupRC(void)
 {
     // Clear color: blue
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_NORMALIZE);
 }
 
 void ChangeSize(int w, int h)
@@ -67,13 +70,13 @@ void ChangeSize(int w, int h)
     {
         windowWidth  = 100.0f;
         windowHeight = 100.0f / aspect;
-        glOrtho(-100.0, 100.0, -windowHeight, windowHeight, 1.0, -1.0);
+        glOrtho(-100.0, 100.0, -windowHeight, windowHeight, -1000.0, 1000.0);
     }
     else
     {
         windowWidth  = 100.0f * aspect;
         windowHeight = 100.0f;
-        glOrtho(-windowWidth, windowWidth, -100.0, 100.0, 1.0, -1.0);
+        glOrtho(-windowWidth, windowWidth, -100.0, 100.0, -1000.0, 1000.0);
     }
 
     glMatrixMode(GL_MODELVIEW);
@@ -143,7 +146,7 @@ int main(int argc, char* argv[])
 {
     loadSTL();
     glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
+    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowSize(800, 600);
     glutCreateWindow("Display STL");
 
