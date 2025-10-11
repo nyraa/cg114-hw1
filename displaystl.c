@@ -1,15 +1,32 @@
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/freeglut.h>
+#include <stdio.h>
+#include <stdint.h>
+#include <stdlib.h>
+
+#include "readstl.h"
 
 static GLfloat windowWidth  = 100.0f;  // world-coord half-width or height (depends on aspect)
 static GLfloat windowHeight = 100.0f;
+
+uint32_t numTriangles;
+struct Triangle* triangles = NULL;
 
 void RenderScene(void)
 {
     glClear(GL_COLOR_BUFFER_BIT);
 
     glColor3f(1.0f, 0.0f, 0.0f);
+
+    glBegin(GL_TRIANGLES);
+    for (uint32_t i = 0; i < numTriangles; i++) {
+        glNormal3fv(triangles[i].normal);
+        glVertex3fv(triangles[i].vertex1);
+        glVertex3fv(triangles[i].vertex2);
+        glVertex3fv(triangles[i].vertex3);
+    }
+    glEnd();
 
     glutSwapBuffers();
 }
@@ -55,6 +72,9 @@ void SpecialKeys(int key, int x, int y)
 
 int main(int argc, char* argv[])
 {
+    numTriangles = readBinSTL("Bunny_Binary.stl", &triangles);
+    printf("Number of triangles read: %u\n", numTriangles);
+
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA);
     glutInitWindowSize(800, 600);
