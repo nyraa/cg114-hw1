@@ -53,6 +53,29 @@ void SetupRC(void)
     glClearColor(0.0f, 0.0f, 1.0f, 1.0f);
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_NORMALIZE);
+
+    /* Lighting setup */
+    glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHT0);
+
+    GLfloat ambientLight[]  = { 0.2f, 0.2f, 0.2f, 1.0f };
+    GLfloat diffuseLight[]  = { 0.8f, 0.8f, 0.8f, 1.0f };
+    GLfloat specularLight[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+    GLfloat lightPos[]      = { 100.0f, 100.0f, 100.0f, 1.0f }; // positional light
+
+    glLightfv(GL_LIGHT0, GL_AMBIENT, ambientLight);
+    glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuseLight);
+    glLightfv(GL_LIGHT0, GL_SPECULAR, specularLight);
+    glLightfv(GL_LIGHT0, GL_POSITION, lightPos);
+
+    /* Let glColor* calls set the material diffuse color */
+    glEnable(GL_COLOR_MATERIAL);
+    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE);
+
+    /* Set default specular and shininess */
+    GLfloat matSpecular[] = { 0.8f, 0.8f, 0.8f, 1.0f };
+    glMaterialfv(GL_FRONT_AND_BACK, GL_SPECULAR, matSpecular);
+    glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, 50.0f);
 }
 
 void ChangeSize(int w, int h)
