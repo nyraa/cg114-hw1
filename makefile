@@ -1,6 +1,6 @@
 CC = gcc
 CFLAGS = -Wall
-LDFLAGS = -lGL -lGLU -lglut
+LDFLAGS = -lGL -lGLU -lglut -lm
 
 OBJ = displaystl.o readstl.o
 
