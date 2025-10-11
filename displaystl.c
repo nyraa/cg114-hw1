@@ -108,6 +108,28 @@ void ChangeSize(int w, int h)
 
 void SpecialKeys(int key, int x, int y)
 {
+    const GLfloat rotationStep = 5.0f;
+
+    switch (key) {
+        case GLUT_KEY_UP:
+            xRot -= rotationStep;
+            break;
+        case GLUT_KEY_DOWN:
+            xRot += rotationStep;
+            break;
+        case GLUT_KEY_LEFT:
+            yRot -= rotationStep;
+            break;
+        case GLUT_KEY_RIGHT:
+            yRot += rotationStep;
+            break;
+    }
+
+    // Reset angles if they exceed 360 or go below 0
+    if (xRot >= 360.0f) xRot -= 360.0f;
+    if (xRot < 0.0f) xRot += 360.0f;
+    if (yRot >= 360.0f) yRot -= 360.0f;
+    if (yRot < 0.0f) yRot += 360.0f;
     glutPostRedisplay();
 }
 
