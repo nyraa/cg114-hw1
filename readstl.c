@@ -16,7 +16,7 @@ uint32_t readBinSTL(const char* filename, struct Triangle** triangles)
     
     uint32_t numTriangles;
     fread(&numTriangles, sizeof(uint32_t), 1, file);
-    *triangles = malloc(numTriangles * sizeof(struct Triangle));
+    *triangles = (struct Triangle*)malloc(numTriangles * sizeof(struct Triangle));
     if (!*triangles) {
         perror("Failed to allocate memory");
         fclose(file);
