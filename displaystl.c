@@ -5,6 +5,8 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <math.h>
+#include <stdbool.h>
+#include <string.h>
 
 #include "readstl.h"
 
@@ -133,10 +135,17 @@ void SpecialKeys(int key, int x, int y)
     glutPostRedisplay();
 }
 
-void loadSTL()
+void loadSTL(bool binary, const char* filename)
 {
-    // numTriangles = readBinSTL("Bunny_Binary.stl", &triangles);
-    numTriangles = readAsciiSTL("Bunny_ASCII.stl", &triangles);
+    if (binary) {
+        numTriangles = readBinSTL(filename, &triangles);
+    } else {
+        numTriangles = readAsciiSTL(filename, &triangles);
+    }
+    if (numTriangles == 0 || triangles == NULL) {
+        fprintf(stderr, "Failed to load STL file or file is empty.\n");
+        exit(EXIT_FAILURE);
+    }
     printf("Number of triangles read: %u\n", numTriangles);
     
     // Re-calculate the normal vectors
@@ -190,7 +199,26 @@ void loadSTL()
 
 int main(int argc, char* argv[])
 {
-    loadSTL();
+    bool binary = true;
+    if (argc >= 3)
+    {
+        if (strcmp(argv[1], "ascii") == 0)
+            binary = false;
+        else if (strcmp(argv[1], "binary") == 0)
+            binary = true;
+        else
+        {
+            fprintf(stderr, "First argument must be 'ascii' or 'binary'\n");
+            return EXIT_FAILURE;
+        }
+        printf("Loading %s STL: %s\n", binary ? "binary" : "ASCII", argv[2]);
+        loadSTL(binary, argv[2]);
+    }
+    else
+    {
+        printf("Loading default binary STL: Bunny_Binary.stl\n");
+        loadSTL(binary, "Bunny_Binary.stl");
+    }
     glutInit(&argc, argv);
     glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH);
     glutInitWindowSize(800, 600);
