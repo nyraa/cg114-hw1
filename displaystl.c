@@ -195,6 +195,14 @@ void loadSTL(bool binary, const char* filename)
     }
 }
 
+void Cleanup(void)
+{
+    if (triangles != NULL) {
+        free(triangles);
+        triangles = NULL;
+    }
+}
+
 int main(int argc, char* argv[])
 {
     bool binary = true;
@@ -228,5 +236,6 @@ int main(int argc, char* argv[])
 
     SetupRC();
     glutMainLoop();
+    Cleanup();
     return 0;
 }
