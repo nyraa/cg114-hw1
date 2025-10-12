@@ -180,14 +180,12 @@ void loadSTL(bool binary, const char* filename)
         GLfloat zMax = triangles[0].vertex1[2];
 
         for (uint32_t i = 1; i < numTriangles; i++) {
-            for (int j = 0; j < 3; j++) {
-                xMin = fminf(xMin, triangles[i].vertex1[j]);
-                xMax = fmaxf(xMax, triangles[i].vertex1[j]);
-                yMin = fminf(yMin, triangles[i].vertex1[j]);
-                yMax = fmaxf(yMax, triangles[i].vertex1[j]);
-                zMin = fminf(zMin, triangles[i].vertex1[j]);
-                zMax = fmaxf(zMax, triangles[i].vertex1[j]);
-            }
+            xMin = fminf(xMin, triangles[i].vertex1[0]);
+            xMax = fmaxf(xMax, triangles[i].vertex1[0]);
+            yMin = fminf(yMin, triangles[i].vertex1[1]);
+            yMax = fmaxf(yMax, triangles[i].vertex1[1]);
+            zMin = fminf(zMin, triangles[i].vertex1[2]);
+            zMax = fmaxf(zMax, triangles[i].vertex1[2]);
         }
 
         xCenter = (xMin + xMax) / 2.0f;
