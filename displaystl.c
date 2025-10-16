@@ -29,9 +29,9 @@ void RenderScene(void)
     glShadeModel(GL_SMOOTH);
 
     glPushMatrix();
-    glTranslatef(-xCenter, -yCenter, -zCenter);
-    glRotatef(xRot, 1.0f, 0.0f, 0.0f);
     glRotatef(yRot, 0.0f, 1.0f, 0.0f);
+    glRotatef(xRot, 1.0f, 0.0f, 0.0f);
+    glTranslatef(-xCenter, -yCenter, -zCenter);
 
     glColor3f(1.0f, 0.0f, 0.0f);
 
